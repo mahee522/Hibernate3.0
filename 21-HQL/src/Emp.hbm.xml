@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ibm.hibernate">
+	<class name="Emp" table="EMP">
+		<id name="eid" column="ENO" />
+		<property name="name" column="ENAME" />
+		<property name="address" column="EADDRESS" />
+		<property name="salary" column="ESALARY" />
+	</class>
+	<query name="getEmps">	<!-- query for HQL -->
+		from Emp e where e.name like 'B%'
+    </query>
+	<sql-query name="getAllEmps">	<!-- sql-query for SQL -->
+		<return alias="e" class="Emp" />
+		SELECT emp.ENO as {e.eid},emp.ENAME as {e.name},emp.ESALARY as {e.salary},emp.EADDRESS as {e.address} from EMP emp
+	</sql-query>
+	<sql-query name="storedprocedure" callable="true">
+		<return alias="emp" class="Emp">
+			<return-property name="eid" column="ENO" />
+			<return-property name="name" column="ENAME" />
+			<return-property name="salary" column="ESALARY" />
+		</return>
+		{?=call selectAllEmployments()}
+	</sql-query>
+</hibernate-mapping>
+
+<!-- 
+create table EMP(
+	eNo number(3) primary key,
+	ename varchar(20),
+	eaddress varchar(20),
+	esalary number(7,2)
+);
+
+CREATE OR REPLACE FUNCTION selectAllEmployments 
+RETURN SYS_REFCURSOR
+AS 
+st_cursor SYS_REFCURSOR; 
+BEGIN 
+OPEN st_cursor FOR 
+SELECT ENO,ENAME,ESALARY from EMP; 
+RETURN st_cursor; 
+END;
+ -->

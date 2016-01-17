@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.ibm.hibernate.Emp" table="EMP">
+		<composite-id name="comId" class="com.ibm.hibernate.EmpCompKey">
+			<key-property name="eid" column="EID" />
+			<key-property name="dependents" column="DEPENDENTS" />
+		</composite-id>
+		<property name="name" column="NAME" />
+	</class>
+</hibernate-mapping>
+
+<!-- 
+CREATE TABLE SYSTEM.EMP
+	(
+	EID        NUMBER (10) NOT NULL,
+	DEPENDENTS NUMBER (10) NOT NULL,
+	NAME       VARCHAR2 (1020),
+	PRIMARY KEY (EID, DEPENDENTS)
+	)
+	 -->

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ibm.hibernate">
+	<class name="Emp" table="EMP1">
+		<id name="eid" type="integer" column="ENO">
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="string" column="ENAME" length="20" />
+		<property name="salary" type="double" column="ESALARY" />
+	</class>
+	<query name="getEmps">	<!-- query for HQL -->
+		from Emp e where e.name like 'B%'
+    </query>
+	<sql-query name="getAllEmps">	<!-- sql-query for SQL -->
+		<return alias="e" class="Emp" />
+		SELECT emp.ENO as {e.eid},emp.ENAME as {e.name},emp.ESALARY as
+		{e.salary} from EMP1 emp
+	</sql-query>
+	<sql-query name="storedprocedure" callable="true">
+		<return alias="emp" class="Emp">
+			<return-property name="eid" column="ENO" />
+			<return-property name="name" column="ENAME" />
+			<return-property name="salary" column="ESALARY" />
+		</return>
+		{?=call selectAllEmployments()}
+	</sql-query>
+</hibernate-mapping>
+
+
+

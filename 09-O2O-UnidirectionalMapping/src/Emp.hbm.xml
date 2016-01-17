@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+   <class name="com.ibm.hibernate.Emp" table="EMP">
+      <id name="id" type="int" column="ENO">
+         <generator class="increment"/>
+      </id>
+      <property name="name" column="ENAME" type="string"/>
+      <property name="salary" column="ESALARY" type="int"/>
+      <many-to-one name="address" column="EADDRESS" class="com.ibm.hibernate.Address" unique="true"  not-null="true"/>
+   </class>
+
+   <class name="com.ibm.hibernate.Address" table="ADDRESS">
+      <id name="id" type="int" column="AID">
+         <generator class="increment"/>
+      </id>
+      <property name="city" column="CITY" type="string"/>
+      <property name="state" column="STATE" type="string"/>
+      <property name="zip" column="ZIP" type="string"/>
+   </class>
+</hibernate-mapping>
+
+<!-- 
+create table EMP (
+	eNo number(3) primary key,
+	ename varchar(20),
+	esalary number(7,2),
+	eaddress number(3) UNIQUE
+);
+
+create table ADDRESS(
+   aid number(3) primary key,
+   city VARCHAR(40),
+   state VARCHAR(40),
+   zip VARCHAR(10)
+);
+ -->

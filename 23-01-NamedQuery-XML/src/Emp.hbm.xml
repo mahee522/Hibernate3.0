@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hibernate.model">
+	<class name="Employee" table="EMPLOYEE">
+		<id name="id" column="EMP_ID" />
+		<set name="addresses">
+			<key column="EMP_ID" />
+			<one-to-many class="Address" />
+		</set>
+		<property name="name" column="EMP_NAME" />
+		<property name="salary" column="EMP_SALARY" />
+	</class>
+
+	<!-- this can be in a different mapping file as well -->
+	<class name="Address" table="ADDRESS">
+		<id name="id" column="ADD_ID" />
+		<many-to-one name="emp" column="EMP_ID" class="Employee" />
+		<property name="street" column="ADDRESS_LINE1" />
+		<property name="city" column="CITY" />
+		<property name="zip" column="ZIPCODE" />
+	</class>
+
+	<query name="emp.named.query1">
+		from Employee where id=1
+	</query>
+
+	<query name="emp.named.query2">
+		select name, salary from Employee where id=2
+	</query>
+
+	<query name="emp.named.query3">
+		select count(*) from Employee
+	</query>
+
+	<sql-query name="emp.native.named.query2">
+		<return class="Employee" />
+		SELECT * FROM EMPLOYEE WHERE EMP_ID=1
+	</sql-query>
+
+	<sql-query name="emp.native.named.query4">
+		<return-scalar column="EMP_NAME" type="java.lang.String" />
+		<return-scalar column="EMP_SALARY" type="java.lang.Long" />
+		SELECT EMP_NAME, EMP_SALARY FROM EMPLOYEE WHERE EMP_ID=3
+	</sql-query>
+
+	<sql-query name="emp.native.named.query5">
+		<return-scalar column="NAME" type="java.lang.String" />
+		<return-scalar column="SALARY" type="java.lang.Long" />
+		SELECT EMP_NAME as NAME, EMP_SALARY as SALARY FROM EMPLOYEE WHERE EMP_ID=4
+	</sql-query>
+
+	<sql-query name="emp.native.named.query6">
+		<return class="Employee" />
+		<return class="Address" />
+		SELECT E.*, A.* FROM EMPLOYEE E, ADDRESS A WHERE E.EMP_ID=A.EMP_ID AND E.EMP_ID=1
+	</sql-query>
+
+	<sql-query name="emp.native.named.query7">
+		<return class="Employee" />
+		<return-scalar column="CITY" type="java.lang.String" />
+		SELECT E.*, A.CITY FROM EMPLOYEE E, ADDRESS A WHERE E.EMP_ID=A.EMP_ID AND E.EMP_ID=2
+	</sql-query>
+
+	<sql-query name="emp.native.named.query8">
+		<return-scalar column="ctc" type="java.math.BigDecimal" />
+		SELECT SUM(EMP_SALARY) as ctc FROM EMPLOYEE
+	</sql-query>
+
+	<sql-query name="emp.native.named.query9">
+		<return-scalar column="EMP_NAME" type="java.lang.String" />
+		<return-scalar column="CITY" type="java.lang.String" />
+		SELECT E.EMP_NAME, A.CITY FROM EMPLOYEE E, ADDRESS A WHERE E.EMP_ID=A.EMP_ID AND E.EMP_ID=2
+	</sql-query>
+
+</hibernate-mapping>

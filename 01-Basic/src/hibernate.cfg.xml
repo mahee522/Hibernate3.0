@@ -1,0 +1,25 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@127.0.0.1:1521:XE</property>
+		<property name="hibernate.connection.username">SYSTEM</property>
+		<property name="hibernate.connection.password">luvondrox</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+		
+		<!-- Optional Properties -->
+		<property name="show_sql">true</property>
+		<property name="hbm2ddl.auto">create</property>
+		<!--  C3P0 Connection Pool -->
+<!-- 		<property name="hibernate.c3p0.max_size">30</property> -->
+<!-- 		<property name="hibernate.c3p0.min_size">21</property> -->
+<!-- 		<property name="hibernate.c3p0.timeout">1800</property> -->
+<!-- 		<property name="hibernate.c3p0.acquire_increment">2</property> -->
+
+		<mapping resource="Emp.hbm.xml" />
+	</session-factory>
+</hibernate-configuration>

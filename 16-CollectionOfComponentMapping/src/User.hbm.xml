@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ibm.hibernate">
+	<class name="User" table="USR">
+		<id name="userId" type="int">
+			<generator class="increment" />
+		</id>
+		<property name="name" type="string" length="20" />
+		<set name="cars" table="CAR">
+			<key column="USERID" />
+			<composite-element class="Cars">
+				<property name="carName" column="CNAME" />
+				<property name="make" column="CAR_MAKE" />
+				<property name="model" column="CAR_MODEL" />
+			</composite-element>
+		</set>
+	</class>
+</hibernate-mapping>
+
+<!-- 
+CREATE TABLE SYSTEM.CAR
+	(
+	USERID    NUMBER (10) NOT NULL,
+	CNAME     VARCHAR2 (1020),
+	CAR_MAKE  VARCHAR2 (1020),
+	CAR_MODEL VARCHAR2 (1020),
+	CONSTRAINT FK103B457FE5674 FOREIGN KEY (USERID) REFERENCES SYSTEM.USR (USERID)
+	);
+
+CREATE TABLE SYSTEM.USR
+	(
+	USERID NUMBER (10) NOT NULL,
+	NAME   VARCHAR2 (80),
+	PRIMARY KEY (USERID)
+	);
+ -->

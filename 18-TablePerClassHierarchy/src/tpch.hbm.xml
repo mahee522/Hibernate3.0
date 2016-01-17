@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ibm.hibernate">
+	<class name="Person" table="TPCH" discriminator-value="P">
+		<id name="id" type="integer" column="ID">
+			<generator class="hilo" />
+		</id>
+		<discriminator column="ObjectType" type="string" />
+		<property name="name" type="string" length="20" />
+		<subclass name="Emp" discriminator-value="E">
+			<property name="salary" type="integer" column="SALARY" />
+			<subclass name="Trainee" discriminator-value="T">
+				<property name="cgpi" type="integer" column="CGPA" />
+			</subclass>
+		</subclass>
+	</class>
+</hibernate-mapping>
+
+<!-- 
+CREATE TABLE SYSTEM.TPCH
+	(
+	ID         NUMBER (10) NOT NULL,
+	OBJECTTYPE VARCHAR2 (1020) NOT NULL,
+	NAME       VARCHAR2 (80),
+	SALARY     NUMBER (10),
+	CGPA       NUMBER (10),
+	PRIMARY KEY (ID)
+	) 
+-->

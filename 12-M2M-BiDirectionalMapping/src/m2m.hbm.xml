@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ibm.hibernate">
+	<class name="Student" table="STUDENT">
+		<id name="sId" type="integer" column="SID">
+			<generator class="assigned" />
+		</id>
+		<property name="sName" column="SNAME" />
+		<set name="courses" table="SU_CU" cascade="all">
+			<key column="SID" />
+			<many-to-many class="Course" column="CID" />
+		</set>
+	</class>
+
+	<class name="Course" table="COURSE">
+		<id name="cId" type="integer" column="CID">
+			<generator class="assigned" />
+		</id>
+		<property name="cName" column="CNAME" />
+		<set name="students" table="SU_CU" cascade="all">
+			<key column="CID" />
+			<many-to-many class="Student" column="SID" />
+		</set>
+	</class>
+</hibernate-mapping>
+
+<!-- 
+CREATE TABLE SYSTEM.STUDENT
+	(
+	SID   NUMBER (10) NOT NULL,
+	SNAME VARCHAR2 (1020),
+	PRIMARY KEY (SID)
+	);
+
+CREATE TABLE SYSTEM.COURSE
+	(
+	CID   NUMBER (10) NOT NULL,
+	CNAME VARCHAR2 (1020),
+	PRIMARY KEY (CID)
+	);
+	
+CREATE TABLE SYSTEM.SU_CU
+	(
+	SID NUMBER (10) NOT NULL,
+	CID NUMBER (10) NOT NULL,
+	PRIMARY KEY (CID, SID),
+	CONSTRAINT FK4B9AF6F42B4849C FOREIGN KEY (CID) REFERENCES SYSTEM.COURSE (CID),
+	CONSTRAINT FK4B9AF6F6A9493A6 FOREIGN KEY (SID) REFERENCES SYSTEM.STUDENT (SID)
+	);
+ -->
+

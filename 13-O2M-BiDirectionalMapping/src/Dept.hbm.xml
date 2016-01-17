@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ibm.hibernate">
+	<class name="Dept" table="DEPT">
+		<id name="deptNo" type="integer" column="DEPTNO">
+			<generator class="assigned" />
+		</id>
+		<property name="deptName" type="string" column="DEPTNAME" length="20" />
+		<property name="manager" type="string" column="MANAGER" length="20" />
+		<set name="emps" table="EMP" cascade="all" lazy="false">
+			<key column="DEPTNO" />
+			<one-to-many class="Emp" />
+		</set>
+	</class>
+</hibernate-mapping>
+
+<!-- 
+CREATE TABLE SYSTEM.DEPT
+	(
+	DEPTNO   NUMBER (10) NOT NULL,
+	DEPTNAME VARCHAR2 (80),
+	MANAGER  VARCHAR2 (80),
+	PRIMARY KEY (DEPTNO)
+	);
+
+CREATE TABLE SYSTEM.EMP
+	(
+	EMPNO  NUMBER (10) NOT NULL,
+	ENAME  VARCHAR2 (80),
+	SAL    FLOAT,
+	DEPTNO NUMBER (10),
+	PRIMARY KEY (EMPNO),
+	CONSTRAINT FK10CA83A33C58E FOREIGN KEY (DEPTNO) REFERENCES SYSTEM.DEPT (DEPTNO)
+	);
+ -->

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ibm.hibernate">
+	<class name="User" table="USR">
+		<id name="uid" type="integer" column="USERID">
+			<generator class="sequence" />
+		</id>
+		<property name="name" column="NAME" />
+		<one-to-one name="address" class="Address" cascade="all" />
+	</class>
+
+	<class name="Address" table="ADDRESS">
+		<id name="doorNo" column="DOORNO">
+			<generator class="foreign">
+				<param name="property">user</param>
+			</generator>
+		</id>
+		<property name="city" column="CITY" />
+		<property name="pin" column="PIN" />
+		<one-to-one name="user" class="User" constrained="true" />
+	</class>
+</hibernate-mapping>
+
+<!-- 
+CREATE TABLE SYSTEM.USR
+	(
+	USERID NUMBER (10) NOT NULL,
+	NAME   VARCHAR2 (1020),
+	PRIMARY KEY (USERID)
+	);
+
+CREATE TABLE SYSTEM.ADDRESS
+	(
+	DOORNO NUMBER (10) NOT NULL,
+	CITY   VARCHAR2 (1020),
+	PIN    NUMBER (19),
+	PRIMARY KEY (DOORNO),
+	CONSTRAINT FKE66327D43AC8223D FOREIGN KEY (DOORNO) REFERENCES SYSTEM.USR (USERID)
+	);
+ -->

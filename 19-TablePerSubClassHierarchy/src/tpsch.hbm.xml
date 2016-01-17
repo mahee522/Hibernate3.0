@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ibm.hibernate">
+	<class name="Person" table="PERSON">
+		<id name="id" type="integer" column="ID">
+			<generator class="hilo" />
+		</id>
+		<property name="name" column="NAME" />
+		<joined-subclass name="Emp" table="EMP">
+			<key column="id" />
+			<property name="salary" column="SALARY" />
+			<joined-subclass name="Trainee" table="TRAINEE">
+				<key column="id" />
+				<property name="cgpi" column="CGPI" />
+			</joined-subclass>
+		</joined-subclass>
+	</class>
+</hibernate-mapping>
+
+<!--
+CREATE TABLE SYSTEM.PERSON
+	(
+	ID   NUMBER (10) NOT NULL,
+	NAME VARCHAR2 (1020),
+	PRIMARY KEY (ID)
+	);
+	 
+CREATE TABLE SYSTEM.EMP
+	(
+	EID        NUMBER (10) NOT NULL,
+	DEPENDENTS NUMBER (10) NOT NULL,
+	NAME       VARCHAR2 (1020),
+	SALARY     FLOAT,
+	DOORNO     NUMBER (10),
+	CITY       VARCHAR2 (1020),
+	PIN        NUMBER (19),
+	PRIMARY KEY (EID, DEPENDENTS)
+	);
+
+CREATE TABLE SYSTEM.TRAINEE
+	(
+	ID   NUMBER (10) NOT NULL,
+	CGPI NUMBER (10),
+	PRIMARY KEY (ID)
+	);
+ -->

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+   <class name="com.ibm.hibernate.Emp" table="EMP">
+      <id name="id" type="int" column="ENO">
+         <generator class="increment"/>
+      </id>
+      <bag name="certificates" cascade="all">
+         <key column="EMPNO"/>
+         <one-to-many class="com.ibm.hibernate.Certificate"/>
+      </bag>
+      <property name="name" column="ENAME" type="string"/>
+      <property name="address" column="EADDRESS" type="string"/>
+      <property name="salary" column="ESALARY" type="int"/>
+   </class>
+
+   <class name="com.ibm.hibernate.Certificate" table="CERTIFICATE">
+      <id name="id" type="int" column="CID">
+         <generator class="increment"/>
+      </id>
+      <property name="name" column="CNAME" type="string"/>
+   </class>
+</hibernate-mapping>
+
+<!-- 
+create table EMP(
+	eNo number(3) primary key,
+	ename varchar(20),
+	eaddress varchar(20),
+	esalary number(7,2));
+
+create table CERTIFICATE (
+   cid number(3) primary key,
+   cname VARCHAR(30),
+   empNo NUMBER(3));
+ -->
